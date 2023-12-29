@@ -23,3 +23,20 @@ code {
 .Inter-font{
   font-family:Inter , sans-serif ;
 }
+.primary-color{
+  color: #1ABC9C;
+}
+.primary-background{
+  background-color: #1ABC9C;
+}
+.hover-primary-background{
+  background-color: #2ee0bc;
+}
+.motivation-background{
+border-radius: 50px 0px 0px 50px;
+background: #001D31;
+box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+.orange-color{
+  color: #E67E22;
+}
