@@ -24,7 +24,10 @@ export default function SignUp() {
   
   let [errorMessage, setErrorMessage] = useState({})
   const handleSubmit = (event) => {
-    event.preventDefault(); // Prevent default form submission behavior
+    event.preventDefault(); 
+
+   console.log(birday)
+   console.log(linkCheckbox.current.checked)
     let newErrors = {};
 
     if (firstName.current.value.trim() === '') {
@@ -33,7 +36,40 @@ export default function SignUp() {
     if (lastName.current.value.trim() === '') {
       newErrors.lastName = 'Last name is required';
     }
-
+    if (email.current.value.trim() === '') {
+      newErrors.email = 'email is required';
+    }else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email.current.value.trim())) {
+      newErrors.email = 'Invalid email address';
+    }
+    
+    if (password.current.value === '') {
+      newErrors.password = 'password is required';
+    }else if (password.current.value.length < 8) {
+      newErrors.password = 'Password must be at least 8 characters';
+    }
+    if (rePassword.current.value.trim() === '') {
+      newErrors.rePassword = 'repate Password is required';
+    }else if (rePassword.current.value !== password.current.value) {
+      newErrors.rePassword = 'Passwords do not match';
+    }
+    if (birday.current.value == '') {
+      birday.lastName = 'birtday is required';
+    }
+    if (City.current.value === '') {
+      newErrors.City = 'City is required';
+    }
+    if (currentSchool.current.value === '') {
+      newErrors.currentSchool = 'currentSchool is required';
+    }
+    if (field.current.value === '') {
+      newErrors.field = 'field is required';
+    }
+    if (birday.current.value === '') {
+      newErrors.birday = 'birthday is required';
+    }
+    if (!linkCheckbox.current.checked ) {
+      newErrors.linkCheckbox = 'you must accepte the terms and privacy';
+    }
     setErrorMessage(newErrors); // Update the state with new error object
   };
 
@@ -84,8 +120,10 @@ export default function SignUp() {
                 type="email"  
                 placeholder="Email"
                 ref={email}
+                
                 required
                 />
+                <InputError message={errorMessage.email} />
               </div>
            
 
@@ -99,6 +137,8 @@ export default function SignUp() {
                 ref={password}
                 required
                 />
+                <InputError message={errorMessage.password} />
+
               </div>
               <div className=" mt-2">
                 <InputText  
@@ -109,6 +149,7 @@ export default function SignUp() {
                 ref={rePassword}
                 required
                 />
+                <InputError message={errorMessage.rePassword} />
               </div>
              
             </div>
@@ -122,33 +163,48 @@ export default function SignUp() {
                 ref={birday}
                 required
                 />
+                  <InputError message={errorMessage.birday} />
               </div>
-          
-            <select required defaultValue="" id="City" className="bg-gray-100 mt-2 text-gray-700  rounded-xl focus:outline-none focus:shadow-outline block w-full py-3 px-3 ">
+          <div className='mt-2 w-full '>
+          <select required ref={City} defaultValue="" id="City" className="bg-gray-100 w-full  text-gray-700  rounded-xl focus:outline-none focus:shadow-outline block py-3 px-3 ">
               <option value="">City</option>
               <option value="ma">Marrakech</option>
               <option value="ra">Rabat</option>
               <option value="casa">Casablanca</option>
               <option value="agad">Agadir</option>
             </select>
+            <InputError message={errorMessage.City} />
+          </div>
+            
             </div>
-            <select required defaultValue="" id="currentSchool" className="bg-gray-100 mt-2 text-gray-700  rounded-xl focus:outline-none focus:shadow-outline block w-full py-3 px-3 ">
+            <div className='mt-2'>
+            <select required ref={currentSchool} defaultValue="" id="currentSchool" className="bg-gray-100  text-gray-700  rounded-xl focus:outline-none focus:shadow-outline block w-full py-3 px-3 ">
               <option value="">Current School</option>
               <option value="ma">ISMAGI</option>
               <option value="ra">EMSI</option>
               <option value="casa">ENSA</option>
               <option value="agad">ENCG</option>
             </select>
-            <select required defaultValue="" id="field" className="bg-gray-100 mt-2 text-gray-700  rounded-xl focus:outline-none focus:shadow-outline block w-full py-3 px-3 ">
-              <option value="">Field</option>
-              <option value="ma">Full-stack developer</option>
-              <option value="ra">graphic designer</option>
-              <option value="casa">Marketing</option>
-              <option value="agad">Comptabel</option>
-            </select>
-            <div className="flex items-center mt-2">
-                <input required id="linkCheckbox" type="checkbox" value="" className="w-3 h-3 primary-color bg-gray-200  rounded " />
+            <InputError message={errorMessage.currentSchool} />
+            </div>
+            
+            <div className='mt-2'>
+              <select required ref={field} defaultValue="" id="field" className="bg-gray-100  text-gray-700  rounded-xl focus:outline-none focus:shadow-outline block w-full py-3 px-3 ">
+                <option value="">Field</option>
+                <option value="ma">Full-stack developer</option>
+                <option value="ra">graphic designer</option>
+                <option value="casa">Marketing</option>
+                <option value="agad">Comptabel</option>
+              </select>
+              <InputError message={errorMessage.currentSchool} />
+            </div>
+            
+            <div className="items-center mt-2">
+                <div>
+                  <input required ref={linkCheckbox} id="linkCheckbox" type="checkbox" value="" className="w-3 h-3 primary-color bg-gray-200  rounded " />
                 <label htmlFor="link-checkbox" className="ms-2 text-sm font-medium Inter-font text-gray-500 ">I agree with the <a href="#" className="primary-color hover:underline">terms and conditions</a> and <a href="#" className="primary-color hover:underline">Privacy Policy </a>.</label>
+                </div>
+                  <InputError message={errorMessage.linkCheckbox} />
             </div>
 
               <button onClick={handleSubmit} className='outfit-font font-black text-xl primary-background text-white w-full py-3 rounded-xl mt-3 hover:hover-primary-background hover:text-gray-50 ease-in duration-200'>Sign Up</button>
