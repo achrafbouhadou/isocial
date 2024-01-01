@@ -196,7 +196,7 @@ export default function SignUp() {
                 <option value="casa">Marketing</option>
                 <option value="agad">Comptabel</option>
               </select>
-              <InputError message={errorMessage.currentSchool} />
+              <InputError message={errorMessage.field} />
             </div>
             
             <div className="items-center mt-2">
