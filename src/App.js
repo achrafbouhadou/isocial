@@ -1,11 +1,12 @@
 import logo from './logo.svg';
 import './App.css';
-import SignUp from './page/SignUp';
+import Home from './page/Home';
+
 
 function App() {
   return (
     <>
-   <SignUp />
+   <Home />
     </>
   );
 }
