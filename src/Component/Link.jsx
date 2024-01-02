@@ -1,8 +1,8 @@
 import React from 'react'
 
-export default function Link({link , title}) {
+export default function Link({link , title , className}) {
   return (
-    <a href={link} className='primary-color' >{title} </a>
+    <a href={link} className={className} >{title} </a>
   )
 }
 
