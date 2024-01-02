@@ -8,7 +8,7 @@ export default function Post({title , name , src,text }) {
   return (
     <div className='relative py-4 px-5 mt-3 bg-gray-50 rounded-lg'>
         <h1 className='Inter-font font-bold text-2xl mb-3'>{title}</h1>
-        <UserProfilQuic name={name} src={src}  specialite={"Devlopper"} lokinFor={"UI / UX Designer"} ecole={"ISMAGI"} />
+        <UserProfilQuic name={name} src={src} isFromPost={true}  specialite={"Devlopper"} lokinFor={"UI / UX Designer"} ecole={"ISMAGI"} />
         <p className='w-full'>
           {text}
         </p >
