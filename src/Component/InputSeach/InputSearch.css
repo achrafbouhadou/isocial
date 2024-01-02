@@ -1,0 +1,12 @@
+#default-search::placeholder {
+ 
+    opacity: 1;
+    color: #ffffff; 
+  }
+  
+  #default-search {
+   
+    opacity: 30%;
+    color: #ffffff; 
+    background: rgba(255, 255, 255, 0.17);
+  }
