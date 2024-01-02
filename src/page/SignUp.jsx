@@ -78,7 +78,7 @@ export default function SignUp() {
     <div className='flex items-center justify-center h-screen'>
        <div className='w-1/2 flex items-center justify-center'>
         <div>
-            <Logo  width={67} height={52} />
+            <Logo  width={67} height={52} color={"#001D31"} />
             <h1 className="font-black text-3xl mt-6  outfit-font ">
             Create Account
             </h1>
