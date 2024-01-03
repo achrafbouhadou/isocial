@@ -11,7 +11,7 @@ export default function InputSearch({textButton , className , ...props}) {
             </svg>
         </div>
         <input type="search" id="default-search" className="block w-full p-3 ps-10 text-sm opacity-100  text-white border border-gray-300 rounded-full bg-white" placeholder="Search Collaborators..." required />
-        <button type="submit" className="text-white absolute end-2.5 bottom-2 secondary-color   focus:outline-none font-medium rounded-lg text-sm px-4 py-1 dark:bg-blue-600 ">{textButton}</button>
+        
     </div>
     </form>
     </>

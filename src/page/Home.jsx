@@ -12,7 +12,7 @@ export default function Home() {
     <Header />
     <div className='flex mt-[41px] ml-[151px]'>
         <SideBare className={"w-1/4 mr-5 rounded-lg h-[566px] "} />
-        <div className="w-1/2">
+        <div className="w-1/2 ">
             <AddPost />
             <div className='mb-4'>
                 <Post  
