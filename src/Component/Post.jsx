@@ -26,7 +26,7 @@ export default function Post({title , name , src,text }) {
         </div>
         <div className='flex justify-between '>
           <h3 className='text-gray-500  font-normal text-sm '>Posted 21 hours ago</h3>
-        <Button title={'Collab'} />
+          <Button className={' background-orange'} title={'Collab'} />
         </div>
     </div>
   )
