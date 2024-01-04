@@ -70,7 +70,7 @@ export default function SignUp() {
     if (!linkCheckbox.current.checked ) {
       newErrors.linkCheckbox = 'you must accepte the terms and privacy';
     }
-    setErrorMessage(newErrors); // Update the state with new error object
+    setErrorMessage(newErrors); 
   };
 
   return (
