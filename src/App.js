@@ -9,7 +9,7 @@ function App() {
   return (
     <>
     <ChakraProvider>
-        <Login />
+        <SignUp />
     </ChakraProvider>
     </>
   );

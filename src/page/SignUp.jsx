@@ -4,6 +4,7 @@ import Link from '../Component/Link'
 import Motivation from './layout/Motivation'
 import InputText from '../Component/InputText'
 import InputError from '../Component/InputError'
+import axios from 'axios'
 
 
 
@@ -23,11 +24,10 @@ export default function SignUp() {
   const linkCheckbox = useRef();
   
   let [errorMessage, setErrorMessage] = useState({})
-  const handleSubmit = (event) => {
-    event.preventDefault(); 
+  let [errorMessageFromBack, setErrorMessageFromBack] = useState('')
 
-   console.log(birday)
-   console.log(linkCheckbox.current.checked)
+  // function that handle  validation  for signup form
+  const validation = ()=>{
     let newErrors = {};
 
     if (firstName.current.value.trim() === '') {
@@ -68,9 +68,46 @@ export default function SignUp() {
       newErrors.birday = 'birthday is required';
     }
     if (!linkCheckbox.current.checked ) {
+
       newErrors.linkCheckbox = 'you must accepte the terms and privacy';
     }
-    setErrorMessage(newErrors); 
+    return newErrors;
+  }
+
+  /// function that handle submite 
+  const handleSubmit = async (event) => {
+    event.preventDefault(); 
+    validation();
+    if (Object.keys(validation()).length === 0) {
+      const userData = {
+        firstname:firstName.current.value,
+        lastName:lastName.current.value,
+        email:email.current.value,
+        password:password.current.value,
+        rePassword:rePassword.current.value,
+        birday:birday.current.value,
+        currentSchool:currentSchool.current.value,
+        field:field.current.value,
+        City:City.current.value,
+      }
+      try {
+        var signupApi = 'http://localhost:8888/isocial_Backend/auth/signup.php'
+        const response = await axios.post(signupApi,userData)
+       if(!response.data.success ){
+        console.log(response.data)
+        setErrorMessageFromBack(response.data.message)
+        console.log(errorMessageFromBack)
+       }
+      } catch (error) {
+        console.log(error)
+      }
+      setErrorMessage({})
+     
+    } else {
+     
+      setErrorMessage(validation());
+      console.log(errorMessage);
+    }
   };
 
   return (
@@ -87,6 +124,7 @@ export default function SignUp() {
              <Link className={"primary-color"}  link={'#'} title={'log in'} />
             </div>
             <form>
+            <InputError message={errorMessageFromBack} />
             <div className='flex '>
               <div className=" mr-2">
                 <InputText  
@@ -191,10 +229,10 @@ export default function SignUp() {
             <div className='mt-2'>
               <select required ref={field} defaultValue="" id="field" className="bg-gray-100  text-gray-700  rounded-xl focus:outline-none focus:shadow-outline block w-full py-3 px-3 ">
                 <option value="">Field</option>
-                <option value="ma">Full-stack developer</option>
-                <option value="ra">graphic designer</option>
-                <option value="casa">Marketing</option>
-                <option value="agad">Comptabel</option>
+                <option value="1">Full-stack developer</option>
+                <option value="2">graphic designer</option>
+                <option value="3">Marketing</option>
+                <option value="4">Comptabel</option>
               </select>
               <InputError message={errorMessage.field} />
             </div>
