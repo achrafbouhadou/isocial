@@ -5,6 +5,7 @@ import Motivation from './layout/Motivation'
 import InputText from '../Component/InputText'
 import InputError from '../Component/InputError'
 import axios from 'axios'
+import { useToast } from '@chakra-ui/react'
 
 
 
@@ -22,9 +23,9 @@ export default function SignUp() {
   const birday = useRef();
   const field = useRef();
   const linkCheckbox = useRef();
-  
+  const toast = useToast()
   let [errorMessage, setErrorMessage] = useState({})
-  let [errorMessageFromBack, setErrorMessageFromBack] = useState('')
+  
 
   // function that handle  validation  for signup form
   const validation = ()=>{
@@ -91,12 +92,15 @@ export default function SignUp() {
         City:City.current.value,
       }
       try {
-        var signupApi = 'http://localhost:8888/isocial_Backend/auth/signup.php'
+        const signupApi = 'http://localhost:8888/isocial_Backend/auth/signup.php'
         const response = await axios.post(signupApi,userData)
        if(!response.data.success ){
-        console.log(response.data)
-        setErrorMessageFromBack(response.data.message)
-        console.log(errorMessageFromBack)
+        toast({
+          title: response.data.message,
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        })
        }
       } catch (error) {
         console.log(error)
@@ -124,7 +128,7 @@ export default function SignUp() {
              <Link className={"primary-color"}  link={'#'} title={'log in'} />
             </div>
             <form>
-            <InputError message={errorMessageFromBack} />
+            
             <div className='flex '>
               <div className=" mr-2">
                 <InputText  

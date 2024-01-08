@@ -5,53 +5,90 @@ import Link from '../Component/Link'
 import Motivation from './layout/Motivation'
 import InputText from '../Component/InputText'
 import InputError from '../Component/InputError'
+import axios from 'axios'
+import { useToast } from '@chakra-ui/react'
+
 
 export default function Login
 () {
-    const email = useRef();
+  const toast = useToast()
+  const email = useRef();
   const password = useRef();
   let [errorMessage, setErrorMessage] = useState({})
-  const handleSubmit = (event) => {
-    event.preventDefault(); 
 
+  const validate = ()=>{
     let newErrors = {};
     if (email.current.value.trim() === '') {
       newErrors.email = 'email is required';
-    }else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email.current.value.trim())) {
-      newErrors.email = 'Invalid email address';
     }
     
     if (password.current.value === '') {
       newErrors.password = 'password is required';
-    }else if (password.current.value.length < 8) {
-      newErrors.password = 'Password must be at least 8 characters';
     }
+    return newErrors
+  }
+  const handleSubmit = async (event) => {
+    event.preventDefault(); 
+    validate()
+
    
-    setErrorMessage(newErrors); 
+   
+   
+    if(Object.keys(validate()).length==0){
+        setErrorMessage({});
+        const userData = {
+          email:email.current.value,
+          password:password.current.value
+        }
+        try {
+          const loginApi = 'http://localhost:8888/isocial_Backend/auth/login.php'
+        const response = await axios.post(loginApi,userData);
+        console.log(response.data);
+        
+        if(!response.data.success){
+          toast({
+            title: response.data.message,
+            status: 'error',
+            duration: 9000,
+            isClosable: true,
+          })
+        }
+        } catch (error) {
+          console.log(error)
+        }
+        
+
+        
+
+    }else{
+      setErrorMessage(validate()); 
+    }
   };
   return (
-    <>
-    <div className='flex items-center justify-center h-screen'>
-       <div className='w-1/2 flex items-center justify-center'>
-        <div>
+    
+     <>
+    <div className='flex  justify-center h-screen'>
+       <div className='w-1/2 flex justify-center'>
+        <div className='w-80  mt-16'>
             <Logo  width={67} height={52} color={"#001D31"} />
             <h1 className="font-black text-3xl mt-6  outfit-font ">
-            Create Account
+            Login
             </h1>
             <div className='flex mb-6 '>
-              <h3 className='mr-2'>Already A Member?</h3>
-             <Link className={"primary-color"}  link={'#'} title={'log in'} />
+              <h3 className='mr-2'>Don’t have an account?</h3>
+             <Link className={"primary-color"}  link={'#'} title={'Sign Up'} />
             </div>
             <form>
+           
             
-              <div className=" mt-2" > 
+              <div className=" w-full mt-2" > 
                 <InputText 
                 defaultValue=""
                 id="email" 
                 type="email"  
                 placeholder="Email"
                 ref={email}
-                
+                className={' w-full'}
                 required
                 />
                 <InputError message={errorMessage.email} />
@@ -59,7 +96,7 @@ export default function Login
            
 
            
-              <div className=" mt-2 mr-2 ">
+              <div className=" mt-2">
                 <InputText  
                 defaultValue=""
                 iid="password" 
@@ -71,7 +108,11 @@ export default function Login
                 <InputError message={errorMessage.password} />
 
               </div>
-              
+          
+            
+           
+            
+            
             
 
               <button onClick={handleSubmit} className='outfit-font font-black text-xl primary-background text-white w-full py-3 rounded-xl mt-3 hover:hover-primary-background hover:text-gray-50 ease-in duration-200'>Sign Up</button>
