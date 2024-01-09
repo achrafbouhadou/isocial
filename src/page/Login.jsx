@@ -1,4 +1,4 @@
-import React, { useRef, useState }  from 'react'
+import React, { useRef, useState,useContext, useEffect }  from 'react'
 
 import Logo from '../Component/Logo'
 import Link from '../Component/Link'
@@ -7,15 +7,28 @@ import InputText from '../Component/InputText'
 import InputError from '../Component/InputError'
 import axios from 'axios'
 import { useToast } from '@chakra-ui/react'
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
+
+
 
 
 export default function Login
 () {
+  const { isLoggedIn, login } = useContext(AuthContext);
+  const navigate = useNavigate();
   const toast = useToast()
   const email = useRef();
   const password = useRef();
   let [errorMessage, setErrorMessage] = useState({})
 
+  useEffect(() => {
+    if (isLoggedIn) {
+        navigate('/'); 
+    }
+}, [isLoggedIn, navigate]);
+
+  
   const validate = ()=>{
     let newErrors = {};
     if (email.current.value.trim() === '') {
@@ -52,6 +65,11 @@ export default function Login
             duration: 9000,
             isClosable: true,
           })
+        }else{
+          axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
+          console.log(response.data.token) // output eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyaWQiOjgsImlhdCI6MTcwNDc4NTk5MCwiZXhwIjoxNzA0ODAwMzkwfQ.Edy8lTTwaQUNpy20Mm5-5OEghv_p3NJkBYf2xfnssl8
+          login(response.data.token)
+          navigate('/');
         }
         } catch (error) {
           console.log(error)
@@ -115,7 +133,7 @@ export default function Login
             
             
 
-              <button onClick={handleSubmit} className='outfit-font font-black text-xl primary-background text-white w-full py-3 rounded-xl mt-3 hover:hover-primary-background hover:text-gray-50 ease-in duration-200'>Sign Up</button>
+              <button onClick={handleSubmit} className='outfit-font font-black text-xl primary-background text-white w-full py-3 rounded-xl mt-3 hover:hover-primary-background hover:text-gray-50 ease-in duration-200'>Login</button>
             </form>
             </div>
         </div> 

@@ -1,18 +1,22 @@
-import React, { useRef, useState } from 'react'
+import React, { useContext, useRef, useState,useEffect } from 'react'
 import Logo from '../Component/Logo'
 import Link from '../Component/Link'
 import Motivation from './layout/Motivation'
 import InputText from '../Component/InputText'
 import InputError from '../Component/InputError'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
+
 import { useToast } from '@chakra-ui/react'
+import { AuthContext } from '../context/AuthContext'
 
 
 
 
 
 export default function SignUp() {
-
+  const { isLoggedIn } = useContext(AuthContext);
+  const navigate = useNavigate();
   const firstName = useRef();
   const lastName = useRef();
   const email = useRef();
@@ -26,6 +30,11 @@ export default function SignUp() {
   const toast = useToast()
   let [errorMessage, setErrorMessage] = useState({})
   
+  useEffect(() => {
+    if (isLoggedIn) {
+        navigate('/'); 
+    }
+}, [isLoggedIn, navigate]);
 
   // function that handle  validation  for signup form
   const validation = ()=>{
@@ -101,6 +110,8 @@ export default function SignUp() {
           duration: 9000,
           isClosable: true,
         })
+       }else{
+        navigate('/login')
        }
       } catch (error) {
         console.log(error)
