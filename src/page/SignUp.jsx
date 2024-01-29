@@ -101,7 +101,7 @@ export default function SignUp() {
         City:City.current.value,
       }
       try {
-        const signupApi = 'http://localhost:8888/isocial_Backend/auth/signup.php'
+        const signupApi = 'auth/signup.php'
         const response = await axios.post(signupApi,userData)
        if(!response.data.success ){
         toast({
