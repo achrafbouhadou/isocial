@@ -5,6 +5,7 @@ export const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    
 
     useEffect(() => {
         const verifyToken = async () => {
@@ -14,7 +15,7 @@ export function AuthProvider({ children }) {
                 return;
             }
 
-            const verificationApi = 'http://localhost:8888/isocial_Backend/auth/authTokenVerification.php';
+            const verificationApi = '/auth/authTokenVerification.php';
             try {
                const response  =  await axios.get(verificationApi, {
                     headers: { Authorization: `Bearer ${token}` }

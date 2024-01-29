@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './page/Home';
 import Login from './page/Login';
 import SignUp from './page/SignUp';
-
+import './axios';
 import { ChakraProvider } from '@chakra-ui/react'
 import { AuthProvider } from './context/AuthContext';
 import HomeProtectedRoute from './ProtectedRoute/HomeProtectedRoute';
@@ -12,6 +12,7 @@ import HomeProtectedRoute from './ProtectedRoute/HomeProtectedRoute';
 
 function App() {
   return (
+    
     <AuthProvider>
     <ChakraProvider>
         <Router>

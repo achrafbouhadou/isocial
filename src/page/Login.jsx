@@ -54,9 +54,9 @@ export default function Login
           password:password.current.value
         }
         try {
-          const loginApi = 'http://localhost:8888/isocial_Backend/auth/login.php'
+          const loginApi = '/auth/login.php'
         const response = await axios.post(loginApi,userData);
-        console.log(response.data);
+       
         
         if(!response.data.success){
           toast({
@@ -67,7 +67,6 @@ export default function Login
           })
         }else{
           axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
-          console.log(response.data.token) // output eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyaWQiOjgsImlhdCI6MTcwNDc4NTk5MCwiZXhwIjoxNzA0ODAwMzkwfQ.Edy8lTTwaQUNpy20Mm5-5OEghv_p3NJkBYf2xfnssl8
           login(response.data.token)
           navigate('/');
         }
