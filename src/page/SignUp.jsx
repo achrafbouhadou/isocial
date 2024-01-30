@@ -136,7 +136,7 @@ export default function SignUp() {
             </h1>
             <div className='flex mb-6 '>
               <h3 className='mr-2'>Already A Member?</h3>
-             <Link className={"primary-color"}  link={'#'} title={'log in'} />
+             <Link className={"primary-color"}  link={'/login'} title={'log in'} />
             </div>
             <form>
             

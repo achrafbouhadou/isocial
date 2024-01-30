@@ -6,6 +6,7 @@ import Post from '../Component/Post'
 import ProfilSumary from '../Component/ProfilSumary'
 import InputText from '../Component/InputText'
 import { AuthContext } from '../context/AuthContext'
+import { PostContext } from '../context/postsContext'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 import {
@@ -27,11 +28,14 @@ import {
     Button,
     Textarea
   } from '@chakra-ui/react'
-
+  import { useToast } from '@chakra-ui/react'
 
 export default function Home() {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const { isLoggedIn } = useContext(AuthContext); 
+    const { posts } = useContext(PostContext); 
+    const toast = useToast()
+  
     const navigate = useNavigate();
   const title = useRef();
   const description = useRef();
@@ -58,6 +62,23 @@ export default function Home() {
         const response = await axios.post(addPostApi, postData, {
             headers: { Authorization: `Bearer ${token}` },
         });
+
+        if(!response.data.success ){
+            toast({
+              title: response.data.message,
+              status: 'error',
+              duration: 9000,
+              isClosable: true,
+            })
+           }else{
+            toast({
+              title: response.data.message,
+              status: 'success',
+              duration: 9000,
+              isClosable: true,
+            })
+           }
+           onOpen = false;
       } catch (error) {
         console.log(error)
       }
@@ -114,9 +135,9 @@ export default function Home() {
                     <div className='mt-2 w-full '>
                     <FormLabel>Project type</FormLabel>
                     <select required  ref={type} defaultValue="" id="City" className="bg-gray-100 w-full  text-gray-700  rounded-xl focus:outline-none focus:shadow-outline block py-3 px-3 ">
-                        <option value="">PFE</option>
-                        <option value="ma">Projet personnele</option>
-                        <option value="ra">UFM</option>
+                        <option value="PFE">PFE</option>
+                        <option value="Projet personnele">Projet personnele</option>
+                        <option value="UFM">UFM</option>
                         
                         </select>
                        
@@ -138,36 +159,39 @@ export default function Home() {
         <SideBare className={"w-1/4 mr-5 rounded-lg h-[566px] "} />
         <div className="w-1/2 ">
             <AddPost onAddPost={onOpen} />
-            <div className='mb-4'>
-                <Post  
-                title={'Delivery Mobile App UI/UX Design. '} 
-                name={"Achraf Bouhadou"} src={"https://bit.ly/dan-abramov"} 
-                text={"I'm on the lookout for a skilled UX/UI designer who shares my enthusiasm for innovation. Someone who can breathe life into the app, making it not just functional but a joy to interact..."}
-            />
-            </div>
-            <div className='mb-4'>
-                <Post  
-                title={'Delivery Mobile App UI/UX Design. '} 
-                name={"Achraf Bouhadou"} src={"https://bit.ly/dan-abramov"} 
-                text={"I'm on the lookout for a skilled UX/UI designer who shares my enthusiasm for innovation. Someone who can breathe life into the app, making it not just functional but a joy to interact..."}
-            />
-            </div>
-            <div className='mb-4'>
-                <Post  
-                title={'Delivery Mobile App UI/UX Design. '} 
-                name={"Achraf Bouhadou"} src={"https://bit.ly/dan-abramov"} 
-                text={"I'm on the lookout for a skilled UX/UI designer who shares my enthusiasm for innovation. Someone who can breathe life into the app, making it not just functional but a joy to interact..."}
-            />
-            </div>
-            <div className='mb-4'>
-                <Post  
-                title={'Delivery Mobile App UI/UX Design. '} 
-                name={"Achraf Bouhadou"} src={"https://bit.ly/dan-abramov"} 
-                text={"I'm on the lookout for a skilled UX/UI designer who shares my enthusiasm for innovation. Someone who can breathe life into the app, making it not just functional but a joy to interact..."}
-            />
-            </div>
             
+            {Array.isArray(posts) && posts.map(post => {
+  
+    if (post.id_user_travail === null) {
+        return (
+            <div className='mb-4' key={post.id}>
+                <Post  
+                idpost={post.id}
+                    title={post.title} 
+                    iduser={post.id_user_request} 
+                    src={post.image_url} 
+                    text={post.description}
+                    idField={post.id_field}
+                    type={post.type}
+                    date={post.end_date}
+                />
+            </div>
+        );
+    } else {
+        // If id_user_travail is not null, don't render the post
+        return null;
+    }
+})}
+              
+            <div className='mb-4'>
+                <Post  
+                title={'Delivery Mobile App UI/UX Design. '} 
+                name={"Achraf Bouhadou"} src={"https://bit.ly/dan-abramov"} 
+                text={"I'm on the lookout for a skilled UX/UI designer who shares my enthusiasm for innovation. Someone who can breathe life into the app, making it not just functional but a joy to interact..."}
+            />
+            </div>
         </div>
+        
         <ProfilSumary className={"w-1/3"}/>
     </div>
     </>

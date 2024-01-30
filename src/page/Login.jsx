@@ -93,7 +93,7 @@ export default function Login
             </h1>
             <div className='flex mb-6 '>
               <h3 className='mr-2'>Don’t have an account?</h3>
-             <Link className={"primary-color"}  link={'#'} title={'Sign Up'} />
+             <Link className={"primary-color"}  link={'/signup'} title={'Sign Up'} />
             </div>
             <form>
            
