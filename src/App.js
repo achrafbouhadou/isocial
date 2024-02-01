@@ -5,6 +5,8 @@ import Home from './page/Home';
 import Login from './page/Login';
 import SignUp from './page/SignUp';
 import Collabwith from './page/Collabwith';
+import Collabs from './page/Collabs';
+import Request from './page/Request';
 import './axios';
 import { ChakraProvider } from '@chakra-ui/react'
 import { AuthProvider } from './context/AuthContext';
@@ -23,6 +25,8 @@ function App() {
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/collabs" element={<Collabs />} />
+            <Route path="/pending" element={<Request />} />
            
             <Route path="/" element={<HomeProtectedRoute><Home /></HomeProtectedRoute>} />
             <Route path="/colabwith" element={<CollabProtectedRoutes><Collabwith /></CollabProtectedRoutes>} />

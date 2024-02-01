@@ -67,7 +67,7 @@ export default function Login
           })
         }else{
           axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
-          login(response.data.token)
+          login(response.data.token , response.data.userid)
           navigate('/');
         }
         } catch (error) {

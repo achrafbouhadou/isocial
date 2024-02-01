@@ -7,7 +7,7 @@ import { useToast } from '@chakra-ui/react'
 
 
 
-export default function Post({idpost,title , iduser , src,text,idField,type ,date}) {
+export default function Post({idpost,title , iduser , src,text,idField,type ,date , isfrom=false , isNotAccpted=false}) {
   const [user, setUser] = useState({});
   const [field, setField] = useState({});
   const toast = useToast()
@@ -99,7 +99,10 @@ export default function Post({idpost,title , iduser , src,text,idField,type ,dat
           </div>
           <div className='flex justify-between '>
             <h3 className='text-gray-500 font-normal text-sm '>Posted 21 hours ago</h3>
-            <Button  className={' background-orange'} title={'Collab'} onCollab={handleColab} />
+            {!isfrom && !isNotAccpted ? (
+                <Button className={'background-orange'} title={'Collab'} onCollab={handleColab} />
+            ) : null}
+           
           </div>
         </>
       )}

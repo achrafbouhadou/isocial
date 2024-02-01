@@ -32,8 +32,9 @@ export function AuthProvider({ children }) {
         verifyToken();
     }, []);
 
-    const login = (token) => {
+    const login = (token,id) => {
         localStorage.setItem('token', token); 
+        localStorage.setItem('userid', id); 
         setIsLoggedIn(true);
     };
 

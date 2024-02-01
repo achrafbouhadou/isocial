@@ -74,8 +74,10 @@ export default function SideBare({className}) {
       <path d="M0 3.75614C0 3.75614 0.00974967 3.75614 0.0146245 3.75614C0.0182806 3.77374 0.0194993 3.78867 0 3.79544V3.75614Z" fill="#1ABC9C"/>
       <path d="M0 4.69319C0 4.69319 0.00974967 4.69319 0.0146245 4.69319C0.0170619 4.70944 0.0219368 4.72704 0 4.7311V4.69183V4.69319Z" fill="#1ABC9C"/>
     </svg>}
-
+    
     name={"My Requests"}
+    to={'/pending'}
+    
       />
 
       <ExploreWithIcon 
@@ -91,6 +93,7 @@ export default function SideBare({className}) {
 </svg>}
 
     name={"My Collabs"}
+    to={'/collabs'}
       />
     </div>
   )
